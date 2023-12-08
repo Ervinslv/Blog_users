@@ -10,9 +10,11 @@ from werkzeug.security import generate_password_hash, check_password_hash
 from sqlalchemy.orm import relationship, Mapped
 # Import your forms from the forms.py
 from forms import CreatePostForm, RegisterForm, LoginForm, CommentForm
+import os
 
 app = Flask(__name__)
-app.config['SECRET_KEY'] = '8BYkEfBA6O6donzWlSihBXox7C0sKR6b'
+app.config['SECRET_KEY'] = os.getenv("FLASK_KEY")
+
 ckeditor = CKEditor(app)
 Bootstrap5(app)
 
@@ -26,6 +28,7 @@ def load_user(user_id):
 
 
 app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///posts.db'
+
 app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
 db = SQLAlchemy()
 db.init_app(app)
